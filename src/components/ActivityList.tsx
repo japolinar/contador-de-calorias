@@ -3,6 +3,7 @@ import { Activity } from '../types'
 import { categories } from '../data/categories';
 import { PencilSquareIcon, XCircleIcon } from '@heroicons/react/16/solid';
 import { ActiivityActions } from '../reducers/activity-reducer';
+import Swal from "sweetalert2"
 
 type ActivityListProps = {
     activities: Activity[],
@@ -17,6 +18,30 @@ export const ActivityList = ({activities, dispatch}: ActivityListProps) => {
     , [activities])  
 
     const isEmptyActivities = useMemo(() => activities.length === 0, [activities])
+
+    const handleDeleteActivity  = (id: Activity['id'])=>{
+        Swal.fire({
+            title: "Estas seguro en Eliminar?",            
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#312e81",
+            cancelButtonColor: "#b91c1c",
+            confirmButtonText: "Si, Eliminar!",
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch({type: 'delete-activity', payload: {id: id} })
+                Swal.fire({
+                    title: "Eliminado!",
+                    text: "Su Actividad fue Eliminada.",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        }) 
+
+    }
 
   return (
     <>
@@ -56,7 +81,7 @@ export const ActivityList = ({activities, dispatch}: ActivityListProps) => {
                         </button>
                         
                         <button
-                            onClick={()=> dispatch({type: 'delete-activity', payload: {id: item.id} })}
+                            onClick={ () => handleDeleteActivity(item.id) }
                         >
                             <XCircleIcon
                                 className=' h-8 w-8 text-red-700'
