@@ -1,4 +1,3 @@
-
 import { useReducer, useEffect, useMemo } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -6,6 +5,7 @@ import { Form } from './components/Form'
 import { activityReducer, initialState } from './reducers/activity-reducer'
 import { ActivityList } from './components/ActivityList'
 import { CalorieTracker } from './components/CalorieTracker'
+import Swal from "sweetalert2"
 
 function App() { 
 
@@ -17,6 +17,20 @@ function App() {
   }, [state.activities]);
 
   const canRestartApp = () => useMemo(()=> state.activities.length > 0 ,[state.activities])
+
+
+  const handlerestapp = ()=>{
+
+    dispatch({type: 'restart-app'})
+    
+    Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "App Reiniciada",
+        showConfirmButton: false,
+        timer: 1500
+    })
+  }
   
   return (
     <>
@@ -35,7 +49,7 @@ function App() {
           <button 
             className=' bg-gray-700 hover:bg-gray-800 text-white p-2 rounded-lg uppercase font-bold cursor-pointer border disabled:opacity-10 ms-20'
             disabled={!canRestartApp()}
-            onClick={() => dispatch({type: 'restart-app'})}
+            onClick={() => handlerestapp() }
           >
             Reiniciar APP
           </button>

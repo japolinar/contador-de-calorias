@@ -3,6 +3,7 @@ import {v4 as uuidV4} from 'uuid'
 import { categories } from "../data/categories"
 import type { Activity } from "../types";
 import { ActiivityActions, ActivitySatate } from "../reducers/activity-reducer";
+import Swal from "sweetalert2"
 
 type FormPros = {
     dispatch: Dispatch<ActiivityActions>,
@@ -55,6 +56,14 @@ export const Form = ({dispatch, state}: FormPros) => {
         setActivity({
             ...initialState,
             id: uuidV4()
+        })
+
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Guardado...!",
+            showConfirmButton: false,
+            timer: 1500
         })
     }
     

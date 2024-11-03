@@ -1,5 +1,4 @@
 import { Activity } from "../types"
-import Swal from "sweetalert2"
 
 export type ActiivityActions = 
 { type: 'save-activity', payload: {newActivity: Activity}} |
@@ -54,24 +53,14 @@ export const activityReducer = (
         }
     }
 
-    if (action.type === 'delete-activity') {   
-        
+    if (action.type === 'delete-activity') {    
         return{
             ...state,
             activities: state.activities.filter((item) => item.id !== action.payload.id)                    
-        }  
-                 
+        }                   
     }
 
     if (action.type === 'restart-app') {
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "App Reiniciada",
-            showConfirmButton: false,
-            timer: 1500
-        })
-
         return{
             activities: [],
             activeId: ''

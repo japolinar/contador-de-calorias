@@ -19,7 +19,8 @@ export const ActivityList = ({activities, dispatch}: ActivityListProps) => {
 
     const isEmptyActivities = useMemo(() => activities.length === 0, [activities])
 
-    const handleDeleteActivity  = (id: Activity['id'])=>{
+    const handleDeleteActivity  = (id: Activity['id'])=>{    
+
         Swal.fire({
             title: "Estas seguro en Eliminar?",            
             icon: "question",
@@ -30,7 +31,9 @@ export const ActivityList = ({activities, dispatch}: ActivityListProps) => {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
+                
                 dispatch({type: 'delete-activity', payload: {id: id} })
+                              
                 Swal.fire({
                     title: "Eliminado!",
                     text: "Su Actividad fue Eliminada.",
